@@ -1,16 +1,22 @@
 #!/usr/bin/env node
 
-import {playRPS, playRPSLS} from "./lib/rpsls.js"
-import minimist from 'minimist'
-import express from 'express'
+import minimist from 'minimist';
+import { rps, rpsls } from "./lib/rpsls.js"
+import express from 'express';
 
 var argv = minimist(process.argv.slice(2));
-const port = argv.port || 5000;
+var HTTP_PORT = 5000;
+if(argv['port'] != undefined) {
+    HTTP_PORT = argv['port'];
+}
 
 const app = express();
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
+const server = app.listen(HTTP_PORT, () => {
+    console.log(`Server is working on port ${HTTP_PORT}`)
+});
 
 app.get("/app/", (req, res, next) => {
     res.json({"message":"200 OK"});
@@ -18,12 +24,12 @@ app.get("/app/", (req, res, next) => {
 });
 
 app.get("/app/rps", (req, res, next) => {
-    res.json(playRPS());
+    res.json(rps());
 	res.status(200);
 });
 
 app.get("/app/rpsls", (req, res, next) => {
-    res.json(playRPSLS());
+    res.json(rpsls());
 	res.status(200);
 });
 
@@ -34,7 +40,7 @@ app.get("/app/rps/play", (req, res, next) => {
 
 
 app.get("/app/rpsls/play", (req, res, next) => {
-    res.json(playRPSLS(req.query.shot));
+    res.json(rpsls(req.query.shot));
 	res.status(200);
 });
 
@@ -46,21 +52,19 @@ app.post("/app/rps/play", (req, res, next) => {
 
 
 app.post("/app/rpsls/play", (req, res, next) => {
-    res.json(playRPSLS(req.body.shot));
+    res.json(rpsls(req.body.shot));
 	res.status(200);
 });
 
 app.get("/app/rps/play/:shot", (req, res, next) => {
-    res.json(playRPS(req.params['shot']));
+    res.json(rps(req.params['shot']));
 	res.status(200);
 });
-
 
 app.get("/app/rpsls/play/:shot", (req, res, next) => {
-    res.json(playRPSLS(req.params.shot));
+    res.json(rpsls(req.params.shot));
 	res.status(200);
 });
-
 
 app.use(function(req, res){
 	res.json({"message":"404 NOT FOUND"});
