@@ -1,0 +1,28 @@
+{
+  "name": "api-a04",
+  "version": "1.0.0",
+  "description": "api with rps rpsls",
+  "main": "server.js",
+  "type": "module",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "node server.js --port=5555",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/comp426-2023-spring/a04-mateocorrea99.git"
+  },
+  "author": "mateocorrea99",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/comp426-2023-spring/a04-mateocorrea99/issues"
+  },
+  "homepage": "https://github.com/comp426-2023-spring/a04-mateocorrea99#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "minimist": "^1.2.8"
+  }
+}
